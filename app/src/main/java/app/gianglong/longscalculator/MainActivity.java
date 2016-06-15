@@ -462,6 +462,8 @@ public class MainActivity extends AppCompatActivity{
                         btMinus.setTextSize(38);
                         btMinus.setTypeface(null, Typeface.BOLD);
                         arrPress.add(btMinus.getText().toString());
+
+                        mCalculate.minus();
                         // PRESSED
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
@@ -504,7 +506,7 @@ public class MainActivity extends AppCompatActivity{
                         btAdd.setTextSize(38);
                         btAdd.setTypeface(null, Typeface.BOLD);
 
-                        if(arrPress.size() > 0){
+                        if(tvCalculation.length() > 0){
                             if(arrPress.get(arrPress.size()-1).equals(btResult.getText().toString())){
                                 mCalculate.resetText(btAdd.getText().toString());
                             }else{
@@ -513,6 +515,7 @@ public class MainActivity extends AppCompatActivity{
                                     && !arrPress.get(arrPress.size() - 1).equals(btMul.getText().toString())
                                     && !arrPress.get(arrPress.size() - 1).equals(btDiv.getText().toString())
                                     && !arrPress.get(arrPress.size() - 1).equals(btRemaining.getText().toString())){
+
 
                                     arrPress.add(btAdd.getText().toString());
                                     mCalculate.setText(btAdd.getText().toString());
@@ -558,7 +561,7 @@ public class MainActivity extends AppCompatActivity{
                         btSub.setTextSize(38);
                         btSub.setTypeface(null, Typeface.BOLD);
 
-                        if(arrPress.size() > 0){
+                        if(tvCalculation.length() > 0){
                             if(arrPress.get(arrPress.size()-1).equals(btResult.getText().toString())){
                                 mCalculate.resetText(btSub.getText().toString());
                             }else{
@@ -591,7 +594,7 @@ public class MainActivity extends AppCompatActivity{
                         btMul.setTextSize(38);
                         btMul.setTypeface(null, Typeface.BOLD);
 
-                        if(arrPress.size() > 0){
+                        if(tvCalculation.length() > 0){
                             if(arrPress.get(arrPress.size()-1).equals(btResult.getText().toString())){
                                 mCalculate.resetText(btMul.getText().toString());
                             }else{
@@ -624,7 +627,7 @@ public class MainActivity extends AppCompatActivity{
                         btDiv.setTextSize(38);
                         btDiv.setTypeface(null, Typeface.BOLD);
 
-                        if(arrPress.size() > 0){
+                        if(tvCalculation.length() > 0){
                             if(arrPress.get(arrPress.size()-1).equals(btResult.getText().toString())){
                                 mCalculate.resetText(btDiv.getText().toString());
                             }else{
@@ -657,7 +660,7 @@ public class MainActivity extends AppCompatActivity{
                         btRemaining.setTextSize(38);
                         btRemaining.setTypeface(null, Typeface.BOLD);
 
-                        if(arrPress.size() > 0){
+                        if(tvCalculation.length() > 0){
                             if(arrPress.get(arrPress.size()-1).equals(btResult.getText().toString())){
                                 mCalculate.resetText(btRemaining.getText().toString());
                             }else{

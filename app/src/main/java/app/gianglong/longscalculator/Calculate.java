@@ -8,6 +8,7 @@ import android.util.Log;
  */
 public class Calculate {
     String value = "";
+    public boolean isMinus = false;
 
     public void setText(String text){
         String temp = MainActivity.tvCalculation.getText().toString();
@@ -32,6 +33,7 @@ public class Calculate {
         MainActivity.tvCalculation.setText(result);
         MainActivity.arrCalculations.add(calculation);
         MainActivity.arrPress.add(calculation);
+        isMinus = false;
         value = "";
 
     }
@@ -41,6 +43,7 @@ public class Calculate {
         MainActivity.arrCalculations.clear();
         MainActivity.arrNumbers.clear();
         MainActivity.arrPress.clear();
+        isMinus = false;
         value = "";
     }
 
@@ -64,7 +67,6 @@ public class Calculate {
                         MainActivity.arrNumbers.remove(MainActivity.arrNumbers.size()-1);
                         MainActivity.arrNumbers.add(value);
                     }
-                    myLog("here - " + value  + " - "+ MainActivity.arrNumbers.size());
                 }
                 MainActivity.tvCalculation.setText(newStr);
             }else{
@@ -102,8 +104,6 @@ public class Calculate {
             }
         }
 
-        myLog("=");
-
 
         return result;
     }
@@ -115,6 +115,7 @@ public class Calculate {
                 MainActivity.arrCalculations.add(text);
                 //Log.d("Message", "Saved value : " + value + " (Size: " + MainActivity.arrNumbers.size() + ")");
                 value = "";
+                isMinus = false; // reset minus value
             }else{
                 value += text;
             }
@@ -122,6 +123,40 @@ public class Calculate {
             MainActivity.arrCalculations.add(text);
             value = "";
         }
+    }
+
+    public void minus(){
+        if(!isMinus){
+
+           value = "-" + value;
+           String temp = MainActivity.tvCalculation.getText().toString();
+           if(MainActivity.arrCalculations.size() == 0){
+               temp = "-" + temp;
+           }else{
+               temp = temp + "-";
+           }
+           MainActivity.tvCalculation.setText(temp);
+
+           isMinus = true;
+
+        }else{
+
+           if(value.length() > 1){
+               value = value.substring(1,value.length()-1);
+           }else if(value.length() == 1){
+               value = "";
+           }
+           String temp = MainActivity.tvCalculation.getText().toString();
+           if(MainActivity.arrCalculations.size() == 0){
+               temp = temp.substring(1, temp.length());
+           }else{
+               temp = temp.substring(0, temp.length()-1);
+           }
+           MainActivity.tvCalculation.setText(temp);
+
+           isMinus = false;
+       }
+
     }
 
 
