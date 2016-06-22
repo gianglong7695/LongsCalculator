@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="app.gianglong.longscalculator.MainActivity" >
+
+    <item android:id="@+id/action_history"
+        android:title="Lịch sử"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_settings"
+        android:title="Cài đặt"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_feedback"
+        android:title="Phản hồi"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_share"
+        android:title="Share với bạn bè"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_info"
+        android:title="Thông tin ứng dụng"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+
+</menu>

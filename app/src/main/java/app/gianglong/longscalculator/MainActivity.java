@@ -1,13 +1,15 @@
 package app.gianglong.longscalculator;
 
+import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity{
     public static ArrayList<String> arrCalculations;
     public static ArrayList<String> arrNumbers;
     public static ArrayList<String> arrPress; // Save all press
+    // Database
+    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         setViews();
         setEventButtons();
+        db = new Database(this);
         //----------------
         mCalculate = new Calculate();
         arrCalculations = new ArrayList<>();
@@ -720,14 +725,23 @@ public class MainActivity extends AppCompatActivity{
 
                         // Calculate
                         if(arrPress.size() > 0){
-                            arrPress.add(btResult.getText().toString());
+                            if(!arrPress.get(arrPress.size() - 1).equals(btAdd.getText().toString())
+                                    && !arrPress.get(arrPress.size() - 1).equals(btSub.getText().toString())
+                                    && !arrPress.get(arrPress.size() - 1).equals(btMul.getText().toString())
+                                    && !arrPress.get(arrPress.size() - 1).equals(btDiv.getText().toString())
+                                    && !arrPress.get(arrPress.size() - 1).equals(btRemaining.getText().toString())){
+                                arrPress.add(btResult.getText().toString());
 
-                            Double result = mCalculate.calculate();
-                            if( result % 1 == 0){
-                                String str = result + "";
-                                tvResult.setText(str.substring(0, str.length() - 2));
-                            }else{
-                                tvResult.setText(String.valueOf(result));
+                                Double result = mCalculate.calculate();
+                                if( result % 1 == 0){
+                                    String str = result + "";
+                                    tvResult.setText(str.substring(0, str.length() - 2));
+                                }else{
+                                    tvResult.setText(String.valueOf(result));
+                                }
+
+                                // insert values into database
+                                db.insert(tvCalculation.getText().toString(), tvResult.getText().toString());
                             }
 
                         }
@@ -743,6 +757,42 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+            case R.id.action_history:
+                Intent it = new Intent(this, HistoryActivity.class);
+                startActivity(it);
+                break;
+            case R.id.action_settings:
+                Intent settingActivity = new Intent(this, SettingsActivity.class);
+                startActivity(settingActivity);
+                Toast.makeText(MainActivity.this, "Đang xây dựng ...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_feedback:
+
+                break;
+            case R.id.action_share:
+
+                break;
+
+            case R.id.action_info:
+                Intent infoActivity = new Intent(this, InfomationActivity.class);
+                startActivity(infoActivity);
+                break;
+
+        }
+        return true;
     }
 
     // Log methods

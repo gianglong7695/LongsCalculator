@@ -10,7 +10,7 @@ public class Calculate {
     String value = "";
     public boolean isMinus = false;
 
-    public void setText(String text){
+    public void setText(String text) {
         String temp = MainActivity.tvCalculation.getText().toString();
         temp += text;
         MainActivity.tvCalculation.setText(temp);
@@ -21,7 +21,7 @@ public class Calculate {
 
     }
 
-    public void resetText(String calculation){
+    public void resetText(String calculation) {
         String result = MainActivity.tvResult.getText().toString();
 
         MainActivity.arrCalculations.clear();
@@ -37,7 +37,8 @@ public class Calculate {
         value = "";
 
     }
-    public void clear(){
+
+    public void clear() {
         MainActivity.tvCalculation.setText("");
         MainActivity.tvResult.setText("0");
         MainActivity.arrCalculations.clear();
@@ -47,31 +48,32 @@ public class Calculate {
         value = "";
     }
 
-    public void newCalculation(){
+    public void newCalculation() {
         MainActivity.tvCalculation.setText("");
         MainActivity.arrCalculations.clear();
         MainActivity.arrNumbers.clear();
         value = "";
     }
 
-    public void backSpace(){
+    public void backSpace() {
         String temp = MainActivity.tvCalculation.getText().toString();
 
-        if(temp.length() > 0){
-            if(temp.length() > 1){
-                String newStr = temp.substring(0, temp.length()-1);
+        if (temp.length() > 0) {
+            if (temp.length() > 1) {
+                String newStr = temp.substring(0, temp.length() - 1);
+                String lastStr = temp.substring(temp.length()-1, temp.length());
 
-                if(value.length() > 0){
+                if (value.length() > 0) {
                     value = value.substring(0, value.length() - 1);
-                    if(MainActivity.arrNumbers.size() > 0){
-                        MainActivity.arrNumbers.remove(MainActivity.arrNumbers.size()-1);
+                    if (MainActivity.arrNumbers.size() > 0) {
+                        MainActivity.arrNumbers.remove(MainActivity.arrNumbers.size() - 1);
                         MainActivity.arrNumbers.add(value);
                     }
                 }
                 MainActivity.tvCalculation.setText(newStr);
-            }else{
-                String newStr = temp.substring(0, temp.length()-1);
-                if(value.length() > 0){
+            } else {
+                String newStr = temp.substring(0, temp.length() - 1);
+                if (value.length() > 0) {
                     value = value.substring(0, value.length() - 1);
                 }
                 MainActivity.tvCalculation.setText(newStr);
@@ -80,27 +82,27 @@ public class Calculate {
         }
     }
 
-    public double calculate(){
-        if(MainActivity.arrNumbers.size() == MainActivity.arrCalculations.size()){
+    public double calculate() {
+        if (MainActivity.arrNumbers.size() == MainActivity.arrCalculations.size()) {
             MainActivity.arrNumbers.add(value); // Save last number
         }
 
         double result = Double.parseDouble(MainActivity.arrNumbers.get(0)); // Result = numbers[0]
-        for (int i = 0; i < MainActivity.arrCalculations.size(); i++){
-            if(MainActivity.arrCalculations.get(i).equals("+")){
-                result += Double.parseDouble(MainActivity.arrNumbers.get(i+1));
+        for (int i = 0; i < MainActivity.arrCalculations.size(); i++) {
+            if (MainActivity.arrCalculations.get(i).equals("+")) {
+                result += Double.parseDouble(MainActivity.arrNumbers.get(i + 1));
             }
-            if(MainActivity.arrCalculations.get(i).equals("-")){
-                result -= Double.parseDouble(MainActivity.arrNumbers.get(i+1));
+            if (MainActivity.arrCalculations.get(i).equals("-")) {
+                result -= Double.parseDouble(MainActivity.arrNumbers.get(i + 1));
             }
-            if(MainActivity.arrCalculations.get(i).equals("×")){
-                result *= Double.parseDouble(MainActivity.arrNumbers.get(i+1));
+            if (MainActivity.arrCalculations.get(i).equals("×")) {
+                result *= Double.parseDouble(MainActivity.arrNumbers.get(i + 1));
             }
-            if(MainActivity.arrCalculations.get(i).equals("÷")){
-                result /= Double.parseDouble(MainActivity.arrNumbers.get(i+1));
+            if (MainActivity.arrCalculations.get(i).equals("÷")) {
+                result /= Double.parseDouble(MainActivity.arrNumbers.get(i + 1));
             }
-            if(MainActivity.arrCalculations.get(i).equals("%")){
-                result %= Double.parseDouble(MainActivity.arrNumbers.get(i+1));
+            if (MainActivity.arrCalculations.get(i).equals("%")) {
+                result %= Double.parseDouble(MainActivity.arrNumbers.get(i + 1));
             }
         }
 
@@ -108,66 +110,64 @@ public class Calculate {
         return result;
     }
 
-    public void saveValues(String text){
-        if(!MainActivity.arrPress.get(MainActivity.arrPress.size() -1).equals("=")){
-            if(text.equals("+") || text.equals("-") || text.equals("×") || text.equals("÷") || text.equals("%")){
+    public void saveValues(String text) {
+        if (!MainActivity.arrPress.get(MainActivity.arrPress.size() - 1).equals("=")) {
+            if (text.equals("+") || text.equals("-") || text.equals("×") || text.equals("÷") || text.equals("%")) {
                 MainActivity.arrNumbers.add(value);
                 MainActivity.arrCalculations.add(text);
                 //Log.d("Message", "Saved value : " + value + " (Size: " + MainActivity.arrNumbers.size() + ")");
                 value = "";
                 isMinus = false; // reset minus value
-            }else{
+            } else {
                 value += text;
             }
-        }else{
+        } else {
             MainActivity.arrCalculations.add(text);
             value = "";
         }
     }
 
-    public void minus(){
-        if(!isMinus){
+    public void minus() {
+        if (!isMinus) {
+            value = "-" + value;
+            String temp = MainActivity.tvCalculation.getText().toString();
+            if (MainActivity.arrCalculations.size() == 0) {
+                temp = "-" + temp;
+            } else {
+                temp = temp + "-";
+            }
 
-           value = "-" + value;
-           String temp = MainActivity.tvCalculation.getText().toString();
-           if(MainActivity.arrCalculations.size() == 0){
-               temp = "-" + temp;
-           }else{
-               temp = temp + "-";
-           }
-           MainActivity.tvCalculation.setText(temp);
+            MainActivity.tvCalculation.setText(temp);
 
-           isMinus = true;
+            isMinus = true;
 
-        }else{
+        } else {
 
-           if(value.length() > 1){
-               value = value.substring(1,value.length()-1);
-           }else if(value.length() == 1){
-               value = "";
-           }
-           String temp = MainActivity.tvCalculation.getText().toString();
-           if(MainActivity.arrCalculations.size() == 0){
-               temp = temp.substring(1, temp.length());
-           }else{
-               temp = temp.substring(0, temp.length()-1);
-           }
-           MainActivity.tvCalculation.setText(temp);
+            if (value.length() > 1) {
+                value = value.substring(1, value.length() - 1);
+            } else if (value.length() == 1) {
+                value = "";
+            }
+            String temp = MainActivity.tvCalculation.getText().toString();
+            if (MainActivity.arrCalculations.size() == 0) {
+                temp = temp.substring(1, temp.length());
+            } else {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            MainActivity.tvCalculation.setText(temp);
 
-           isMinus = false;
-       }
+            isMinus = false;
+        }
 
     }
-
-
-
 
 
     // Log methods
-    public void myLog(String text){
+    public void myLog(String text) {
         Log.d("Calculate", text);
     }
-    public void myLog(int text){
+
+    public void myLog(int text) {
         Log.d("Calculate", text + "");
     }
 
